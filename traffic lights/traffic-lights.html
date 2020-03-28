@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traffic lights</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      --lights-bgc: rgb(105, 104, 109);
+      --edges: rgb(86, 85, 90);
+      --red-on: rgb(204, 6, 5);
+      --red-off: rgb(204, 6, 5, 0.404);
+      --yellow-on: rgb(247, 181, 0);
+      --yellow-off: rgba(245, 180, 0, 0.404);
+      --green-on: rgb(58, 209, 55);
+      --green-off: rgb(51, 165, 50, 0.404);
+    }
+
+    body {
+      user-select: none;
+      overflow: hidden;
+    }
+
+    .wrapper {
+      background-color: #403e43;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    .lightBox {
+      height: 500px;
+      width: 230px;
+      background-color: var(--lights-bgc);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 5px;
+      z-index: 2;
+    }
+
+    .lightPole {
+      position: absolute;
+      top: calc(50% + 249px);
+      left: 50%;
+      width: 50px;
+      height: calc(50% - 250px);
+      transform: translate(-50%, 0%);
+      background-color: var(--lights-bgc);
+      box-shadow: 1px 12px 15px 1px #000;
+      z-index: 1;
+    }
+
+    .light {
+      display: inline-block;
+      background-color: #fff;
+      width: 100px;
+      height: 100px;
+      border-radius: 100%;
+      margin: 20px 0 0 65px;
+      box-shadow: 0px 8px 10px -3px #191818;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .light:focus {
+      outline: 0;
+      border: 0;
+    }
+
+    .light-red {
+      margin-top: 70px;
+      background-color: var(--red-off);
+    }
+
+    #light-red:checked+.light-red {
+      background-color: var(--red-on);
+      box-shadow: 0px 8px 10px -3px #191818, 1px 1px 32px 1px var(--red-on);
+    }
+
+    .light-yellow {
+      background-color: var(--yellow-off);
+    }
+
+    #light-yellow:checked+.light-yellow {
+      background-color: var(--yellow-on);
+      box-shadow: 0px 8px 10px -3px #191818, 1px 1px 32px 1px var(--yellow-on);
+    }
+
+    .light-green {
+      background-color: var(--green-off);
+    }
+
+    #light-green:checked+.light-green {
+      background-color: var(--green-on);
+      box-shadow: 0px 8px 10px -3px #191818, 1px 1px 32px 1px var(--green-on);
+    }
+
+    [name=light] {
+      display: none;
+    }
+
+    .egdeContaner {
+      height: 500px;
+      width: 230px;
+      background-color: transparent;
+      ;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 1px 12px 15px 1px #000;
+      border-radius: 5px;
+    }
+
+    .edges {
+      height: 0;
+      display: inline-block;
+      width: 0;
+      border-radius: 100%;
+      border: 70px solid transparent;
+      z-index: 1;
+    }
+
+    .edge-top {
+      border-left-color: var(--edges);
+      border-top-color: var(--edges);
+      position: absolute;
+      top: -49px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      z-index: -1;
+      box-shadow: 4px 6px 15px 1px #000;
+    }
+
+    .edge-left {
+      border-left-color: var(--edges);
+      transform: translateY(-35px) rotate(-45deg);
+      left: -69px;
+      box-shadow: 1px 22px 15px 1px #000;
+    }
+
+    .edge-left-1 {
+      position: absolute;
+      top: 70px;
+    }
+
+    .edge-left-2 {
+      top: 190px;
+      position: absolute;
+    }
+
+    .edge-left-3 {
+      top: 310px;
+      position: absolute;
+    }
+
+    .edge-right {
+      border-right-color: var(--edges);
+      transform: translateY(-35px) rotate(45deg);
+      right: -69px;
+      box-shadow: 1px 22px 15px 1px #000;
+    }
+
+    .edge-right-1 {
+      position: absolute;
+      top: 70px;
+    }
+
+    .edge-right-2 {
+      top: 190px;
+      position: absolute;
+    }
+
+    .edge-right-3 {
+      top: 310px;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="lightBox">
+      <input type="radio" name="light" id="light-red">
+      <label for="light-red" class="light light-red"></label>
+
+      <input type="radio" name="light" id="light-yellow">
+      <label for="light-yellow" class="light light-yellow"></label>
+
+      <input type="radio" checked name="light" id="light-green">
+      <label for="light-green" class="light light-green"></label>
+
+    </div>
+
+    <div class="lightPole"></div>
+
+    <div class="egdeContaner">
+
+      <div class="edges edge-top"></div>
+      <div class="edges edge-left edge-left-1"></div>
+      <div class="edges edge-left edge-left-2"></div>
+      <div class="edges edge-left edge-left-3"></div>
+
+      <div class="edges edge-right edge-right-1"></div>
+      <div class="edges edge-right edge-right-2"></div>
+      <div class="edges edge-right edge-right-3"></div>
+    </div>
+  </div>
+</body>
+
+</html>
